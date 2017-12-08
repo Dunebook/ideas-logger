@@ -1,0 +1,51 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Ideas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form #ideaForm="ngForm" (ngSubmit)="createIdea(ideaForm)">
+	  <ion-list>
+	  	<ion-item>
+	  	  <ion-label floating>Title</ion-label>
+	  	  <ion-input 
+	  	  	type="text" 
+	  	  	name="title"
+	  	  	ngModel required></ion-input>
+	  	</ion-item>
+	  	<ion-item>
+	  	  <ion-label floating>Content</ion-label>
+	  	  <ion-textarea 
+	  	  	type="text" 
+	  	  	name="content"
+	  	  	ngModel required></ion-textarea>
+	  	</ion-item>
+	  </ion-list>
+	  <button 
+	  	ion-button 
+	  	type="submit" 
+	  	block [disabled]="!ideaForm.valid">Create Idea</button>
+	</form>
+	<ion-card *ngFor="let idea of ideas; let i = index;">
+	  <ion-card-header>
+	  	#{{ i + 1 }} - {{ idea.title }}
+	  </ion-card-header>
+	  <ion-card-content>
+	  	<p>{{ idea.content }}</p>
+	  </ion-card-content>
+	  <ion-row>
+	  	<ion-col>
+	  	  <button ion-button clear small (click)="addToPriorities(idea)" *ngIf="!isAPriority(idea)">
+	  	  	Prioritize
+	  	  </button>
+	  	  <button ion-button clear small color="danger" (click)="removeFromPriority(i)" *ngIf="isAPriority(idea)">
+	  	  	UnPrioritize
+	  	  </button>
+	  	</ion-col>
+	  </ion-row>
+	</ion-card>
+</ion-content>
